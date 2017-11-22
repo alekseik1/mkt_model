@@ -26,78 +26,31 @@ public:
      * @param initial_acceleration Массив из float[3], содержащий начальные ускорения. По умолчанию нули
      */
     explicit MaterialDot(unsigned char mass = 2,
-         float* initial_coordinates = nullptr,
-         float* initial_velocity = nullptr,
-         float* initial_acceleration = nullptr) :
-            _mass(mass)
-    {
-        _coordinates = new float(3);
-        _velocity = new float(3);
-        _acceleration = new float(3);
-        // TODO: Здесь идет опасное присваивание! Надо будет сделать потом проверки
-        if(initial_coordinates != nullptr)
-            for(int i = 0; i < 3; i++) {
-                _coordinates[i] = initial_coordinates[i];
-            }
-        else {
-            _coordinates[0] = 0.0f;
-            _coordinates[1] = 0.0f;
-            _coordinates[2] = 0.0f;
-        }
-        if(initial_velocity != nullptr)
-            for(int i = 0; i < 3; i++) {
-                _velocity[i] = initial_velocity[i];
-            }
-        else {
-            _velocity[0] = 0.0f;
-            _velocity[1] = 0.0f;
-            _velocity[2] = 0.0f;
-        }
-        if(initial_acceleration != nullptr)
-            for(int i = 0; i < 3; i++) {
-                _acceleration[i] = initial_acceleration[i];
-            }
-        else {
-            _acceleration[0] = 0.0f;
-            _acceleration[1] = 0.0f;
-            _acceleration[2] = 0.0f;
-        }
-    }
-
-    virtual ~MaterialDot() {
-        delete _coordinates;
-        delete _velocity;
-        delete _acceleration;
-    }
+         const float* initial_coordinates = nullptr,
+         const float* initial_velocity = nullptr,
+         const float* initial_acceleration = nullptr);
+    virtual ~MaterialDot();
 
 
-    unsigned char get_mass() const {
-        return _mass;
-    }
+    unsigned char get_mass() const;
 
-    float *get_coordinates() const {
-        return _coordinates;
-    }
+    float *get_coordinates() const;
 
-    void set_coordinates(float *_coordinates) {
-        MaterialDot::_coordinates = _coordinates;
-    }
+    void set_coordinates(float *_coordinates);
 
-    float *get_velocity() const {
-        return _velocity;
-    }
+    float *get_velocity() const;
 
-    void set_velocity(float *_velocity) {
-        MaterialDot::_velocity = _velocity;
-    }
+    void set_velocity(float *_velocity);
 
-    float *get_acceleration() const {
-        return _acceleration;
-    }
+    float *get_acceleration() const;
 
-    void set_acceleration(float *_acceleration) {
-        MaterialDot::_acceleration = _acceleration;
-    }
+    void set_acceleration(float *_acceleration);
+
+    /**
+     * Проводит эволюцию материальной точки, соответствующей времени dt
+     * @param dt Квант времени, за который происходит эволюция
+     */
+    void evolute(float dt);
 
 };
 
