@@ -3,10 +3,14 @@
 
  # Unit tests
  add_library(Catch INTERFACE)
+ add_library(tester-main Tests/tester-main.cpp)
+
+ add_library(MaterialDot MaterialDot.cpp)
 
  project(MKT-model)
  add_executable(main main.cpp)
+ target_link_libraries(main MaterialDot)
 
- #project(Tests)
- #add_executable(test-Atom Tests/Atom_test.cpp)
- #target_link_libraries(test-Atom Catch)
+ project(Tests)
+ add_executable(test-MaterialDot Tests/MaterialDot-test.cpp)
+ target_link_libraries(test-MaterialDot Catch tester-main MaterialDot)
