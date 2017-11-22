@@ -12,9 +12,9 @@
 class MaterialDot {
 private:
     unsigned char _mass;
-    float* _coordinates;
-    float* _velocity;
-    float* _acceleration;
+    std::vector<float> _coordinates;
+    std::vector<float> _velocity;
+    std::vector<float> _acceleration;
 
 public:
 
@@ -26,23 +26,22 @@ public:
      * @param initial_acceleration Массив из float[3], содержащий начальные ускорения. По умолчанию нули
      */
     explicit MaterialDot(unsigned char mass = 2,
-         const float* initial_coordinates = nullptr,
-         const float* initial_velocity = nullptr,
-         const float* initial_acceleration = nullptr);
-    virtual ~MaterialDot();
+         const float initial_coordinates[] = nullptr,
+         const float initial_velocity[] = nullptr,
+         const float initial_acceleration[] = nullptr);
 
 
     unsigned char get_mass() const;
 
-    float *get_coordinates() const;
+    std::vector<float> get_coordinates() const;
 
     void set_coordinates(float *_coordinates);
 
-    float *get_velocity() const;
+    std::vector<float> get_velocity() const;
 
     void set_velocity(float *_velocity);
 
-    float *get_acceleration() const;
+    std::vector<float> get_acceleration() const;
 
     void set_acceleration(float *_acceleration);
 

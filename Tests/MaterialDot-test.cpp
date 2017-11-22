@@ -8,21 +8,21 @@
 TEST_CASE("Empty creating", "[Empty]") {
     MaterialDot md1;
     SECTION("Zero coordinates") {
-        float* coord = md1.get_coordinates();
+        std::vector<float> coord = md1.get_coordinates();
         for(int i = 0; i < 3; i++) {
             CHECK(coord[i] == 0.0f);
         }
     }
 
     SECTION("Zero velocity") {
-        float* vel = md1.get_velocity();
+        std::vector<float> vel = md1.get_velocity();
         for(int i = 0; i < 3; i++) {
             CHECK(vel[i] == 0.0f);
         }
     }
 
     SECTION("Zero acceleration") {
-        float* accel = md1.get_acceleration();
+        std::vector<float> accel = md1.get_acceleration();
         for(int i =0; i < 3; i++) {
             CHECK(accel[i] == 0.0f);
         }
@@ -32,12 +32,9 @@ TEST_CASE("Empty creating", "[Empty]") {
 TEST_CASE("Test with non-default constructor") {
     // DATA
     unsigned char m = 5;
-    auto* c = new float[3];
-    c[0] = 1.0f; c[1] = 2.3f; c[2] = -12.5f;
-    auto* v = new float[3];
-    v[0] = -0.123f; v[1] = 1234.9f; v[2] = -8888.2f;
-    auto* a = new float[3];
-    a[0] = -0.12435234f; a[1] = 123123.0f; a[2] = 613.532f;
+    float c[] = {1.0f, 2.3f, -12.5f};
+    float v[] = {-0.123f, 1234.9f, -8123.4f};
+    float a[] = {-0.1232145f, 1231235.0f, 6547563.3432423f};
 
     SECTION("Only mass") {
         MaterialDot md1(m);
@@ -46,7 +43,7 @@ TEST_CASE("Test with non-default constructor") {
     SECTION("Mass and coordinates") {
         MaterialDot md1(m, c);
         CHECK(md1.get_mass() == m);
-        float* c1 = md1.get_coordinates();
+        std::vector<float> c1 = md1.get_coordinates();
         for(int i = 0; i < 3; i++) {
             CHECK(c1[i] == c[i]);
         }
@@ -54,8 +51,8 @@ TEST_CASE("Test with non-default constructor") {
     SECTION("Mass, coordinates and velocity") {
         MaterialDot md1(m, c, v);
         CHECK(md1.get_mass() == m);
-        float* c1 = md1.get_coordinates();
-        float* v1 = md1.get_velocity();
+        std::vector<float> c1 = md1.get_coordinates();
+        std::vector<float> v1 = md1.get_velocity();
         for(int i = 0; i < 3; i++) {
             CHECK(c1[i] == c[i]);
             CHECK(v1[i] == v[i]);
@@ -65,46 +62,42 @@ TEST_CASE("Test with non-default constructor") {
     SECTION("All") {
         MaterialDot md1(m, c, v, a);
         CHECK(md1.get_mass() == m);
-        float* c1 = md1.get_coordinates();
-        float* v1 = md1.get_velocity();
-        float* a1 = md1.get_acceleration();
+        std::vector<float> c1 = md1.get_coordinates();
+        std::vector<float> v1 = md1.get_velocity();
+        std::vector<float> a1 = md1.get_acceleration();
         for(int i = 0; i < 3; i++) {
             CHECK(c1[i] == c[i]);
             CHECK(v1[i] == v[i]);
             CHECK(a1[i] == a[i]);
         }
     }
-    delete c, v, a;
 }
 
 TEST_CASE("Getters test") {
     // DATA
     unsigned char m = 5;
-    auto* c = new float[3];
-    c[0] = 1.0f; c[1] = 2.3f; c[2] = -12.5f;
-    auto* v = new float[3];
-    v[0] = -0.123f; v[1] = 1234.9f; v[2] = -8888.2f;
-    auto* a = new float[3];
-    a[0] = -0.12435234f; a[1] = 123123.0f; a[2] = 613.532f;
+    float c[] = {1.0f, 2.3f, -12.5f};
+    float v[] = {-0.123f, 1234.9f, -8123.4f};
+    float a[] = {-0.1232145f, 1231235.0f, 6547563.3432423f};
 
     MaterialDot md1(m, c, v, a);
     SECTION("Mass") {
         CHECK(md1.get_mass() == m);
     }
     SECTION("Coordinates") {
-        float* c1 = md1.get_coordinates();
+        std::vector<float> c1 = md1.get_coordinates();
         for(int i = 0; i < 3; i++) {
             CHECK(c1[i] == c[i]);
         }
     }
     SECTION("Velocity") {
-        float* v1 = md1.get_velocity();
+        std::vector<float> v1 = md1.get_velocity();
         for(int i = 0; i < 3; i++) {
             CHECK(v1[i] == v[i]);
         }
     }
     SECTION("Acceleration") {
-        float* a1 = md1.get_acceleration();
+        std::vector<float> a1 = md1.get_acceleration();
         for(int i = 0; i < 3; i++) {
             CHECK(a1[i] == a[i]);
         }
@@ -114,18 +107,15 @@ TEST_CASE("Getters test") {
 TEST_CASE("Setters test") {
     // DATA
     unsigned char m = 5;
-    auto* c = new float[3];
-    c[0] = 1.0f; c[1] = 2.3f; c[2] = -12.5f;
-    auto* v = new float[3];
-    v[0] = -0.123f; v[1] = 1234.9f; v[2] = -8888.2f;
-    auto* a = new float[3];
-    a[0] = -0.12435234f; a[1] = 123123.0f; a[2] = 613.532f;
+    float c[] = {1.0f, 2.3f, -12.5f};
+    float v[] = {-0.123f, 1234.9f, -8123.4f};
+    float a[] = {-0.1232145f, 1231235.0f, 6547563.3432423f};
 
     MaterialDot md1;  // Empty by default
 
     SECTION("Coordinates") {
         md1.set_coordinates(c);
-        float* c1 = md1.get_coordinates();
+        std::vector<float> c1 = md1.get_coordinates();
         for(int i = 0; i < 3; i++) {
             CHECK(c1[i] == c[i]);
         }
@@ -133,7 +123,7 @@ TEST_CASE("Setters test") {
 
     SECTION("Velocity") {
         md1.set_velocity(v);
-        float* v1 = md1.get_velocity();
+        std::vector<float> v1 = md1.get_velocity();
         for(int i = 0; i < 3; i++) {
             CHECK(v1[i] == v[i]);
         }
@@ -141,7 +131,7 @@ TEST_CASE("Setters test") {
 
     SECTION("Acceleration") {
         md1.set_acceleration(a);
-        float* a1 = md1.get_acceleration();
+        std::vector<float> a1 = md1.get_acceleration();
         for(int i = 0; i < 3; i++) {
             CHECK(a1[i] == a[i]);
         }
